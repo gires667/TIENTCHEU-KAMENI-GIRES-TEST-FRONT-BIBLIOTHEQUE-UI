@@ -61,23 +61,23 @@ J'ai recréé le composant `PlanningList` du sujet et les 6 séances. J'ai gard�
 
 **Étape 3.1 — Copie du composant et premier lancement.** J'ai déplacé `PlanningList.jsx` dans `src/` et j'en ai fait une copie `PlanningList.initial.jsx` (la version « avant correction »). Au premier `pnpm test`, Vitest répond « No test files found » : c'est normal, il démarre mais je n'ai pas encore écrit de test.
 
-![Déplacement et copie du composant, puis « No test files found »](preuves/Captures%20d'ecran/Capture_d_%C3%A9cran_2026-10-03_101810.png)
+![Déplacement et copie du composant, puis « No test files found »](preuves/Captures%20d'ecran/Capture%20d'%C3%A9cran%202026-10-03%20101810.png)
 
 **Étape 3.2 — Arborescence de `src/`.** Avec `ls -R src` on voit bien `PlanningList.initial.jsx`, `PlanningList.jsx` et `setup.js`.
 
-![Contenu du dossier src](preuves/Captures%20d'ecran/Capture_d_%C3%A9cran_2026-10-03_102119.png)
+![Contenu du dossier src](preuves/Captures%20d'ecran/Capture%20d'%C3%A9cran%202026-10-03%20102119.png)
 
 **Étape 3.3 — Test 1 (chargement) : vert.** Premier test écrit, il passe avec le composant initial car il gère déjà le chargement.
 
-![1 test passé](preuves/Captures%20d'ecran/Capture_d_%C3%A9cran_2026-10-03_102945.png)
+![1 test passé](preuves/Captures%20d'ecran/Capture%20d'%C3%A9cran%202026-10-03%20102945.png)
 
 **Étape 3.4 — Test 2 (succès) : vert.**
 
-![2 tests passés](preuves/Captures%20d'ecran/2_test_passed_.png)
+![2 tests passés](preuves/Captures%20d'ecran/2%20test%20passed%20.png)
 
 **Étape 3.5 — Test 3 (filtre A, avec clavier et nom accessible) : vert.**
 
-![3 tests passés dont le filtre A](preuves/Captures%20d'ecran/filtre_A_affiche_A___promotion_sans_B.png)
+![3 tests passés dont le filtre A](preuves/Captures%20d'ecran/filtre%20A%20affiche%20A%20%2B%20promotion%20sans%20B.png)
 
 ---
 
@@ -85,7 +85,7 @@ J'ai recréé le composant `PlanningList` du sujet et les 6 séances. J'ai gard�
 
 **Étape 4.1 — Test 4 (résultat vide) : rouge.** Le composant initial n'a aucun code pour afficher un message quand la liste est vide, donc le test ne trouve jamais « aucune séance ».
 
-![Test « résultat vide » en échec (1 failed, 3 passed)](preuves/Captures%20d'ecran/test_failed_rouge.png)
+![Test « résultat vide » en échec (1 failed, 3 passed)](preuves/Captures%20d'ecran/test%20failed%20rouge.png)
 
 **Étape 4.2 — Test 5 (erreur) : rouge + erreur non gérée.** Le composant ne gère pas le rejet de la promesse : on voit « 1 error » (Unhandled Rejection) en plus des 2 tests en échec.
 
