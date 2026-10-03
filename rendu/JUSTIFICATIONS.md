@@ -89,11 +89,11 @@ J'ai recréé le composant `PlanningList` du sujet et les 6 séances. J'ai gard�
 
 **Étape 4.2 — Test 5 (erreur) : rouge + erreur non gérée.** Le composant ne gère pas le rejet de la promesse : on voit « 1 error » (Unhandled Rejection) en plus des 2 tests en échec.
 
-![Test « erreur » en échec + 1 error (2 failed, 3 passed)](preuves/Captures%20d'ecran/1_error_.png)
+![Test « erreur » en échec + 1 error (2 failed, 3 passed)](preuves/Captures%20d'ecran/1%20error%20.png)
 
 **Étape 4.3 — Les 6 tests écrits, avant toute correction : 3 rouges.** C'est ma preuve « avant correction » complète : **3 passés, 3 échoués, 1 error**.
 
-![Avant correction : 3 passed, 3 failed, 1 error](preuves/Captures%20d'ecran/3_passed_3_failed.png)
+![Avant correction : 3 passed, 3 failed, 1 error](preuves/Captures%20d'ecran/3%20passed%203%20failed.png)
 
 **Étape 4.4 — Sauvegarde de la trace.** Le dossier `preuves/` contient `F2_avant_correction.txt`, la sortie complète du terminal avant correction (j'ai dû d'abord créer le dossier `preuves`, la première sauvegarde avait échoué).
 
@@ -118,7 +118,7 @@ J'ai recréé le composant `PlanningList` du sujet et les 6 séances. J'ai gard�
 - **Preuve** : avant = étape 4.1 ci-dessus. Après : le test « vide » passe, il reste 2 échecs (erreur et désordre).
 - **Limite** : le message est le même pour tous les groupes.
 
-![Après correction 1 : 4 passed, 2 failed](preuves/Captures%20d'ecran/4_passed_2_failed.png)
+![Après correction 1 : 4 passed, 2 failed](preuves/Captures%20d'ecran/4%20passed%202%20failed.png)
 
 #### Correction 2 — erreur visible et bouton « Réessayer »
 
@@ -131,7 +131,7 @@ J'ai recréé le composant `PlanningList` du sujet et les 6 séances. J'ai gard�
 - **Preuve** : avant = étapes 4.2 et 4.3. Après : plus de « 1 error », il ne reste qu'un test rouge (désordre), on voit d'ailleurs « attendu 2 » dans le code affiché.
 - **Limite** : le message d'erreur est générique, il n'affiche pas la vraie cause.
 
-![Après correction 2 : 5 passed, 1 failed (il reste « désordre »)](preuves/Captures%20d'ecran/5_passed_1_failed.png)
+![Après correction 2 : 5 passed, 1 failed (il reste « désordre »)](preuves/Captures%20d'ecran/5%20passed%201%20failed.png)
 
 #### Correction 3 — réponses dans le désordre (race condition)
 
@@ -144,7 +144,7 @@ J'ai recréé le composant `PlanningList` du sujet et les 6 séances. J'ai gard�
 - **Preuve** : avant = la capture de la correction 2 (le test désordre échoue). Après : **6 tests passés**.
 - **Limite** : on ignore la réponse mais la requête part quand même côté serveur.
 
-![Après correction 3 : 6 tests passés](preuves/Captures%20d'ecran/6_passed_.png)
+![Après correction 3 : 6 tests passés](preuves/Captures%20d'ecran/6%20passed%20.png)
 
 **Trace complète :** `preuves/F2_apres_correction.txt`. **Commit après correction :** `YYYYYYY` (à remplir).
 
@@ -154,9 +154,9 @@ J'ai recréé le composant `PlanningList` du sujet et les 6 séances. J'ai gard�
 
 Pour être sûr que mon module est autonome, j'ai cloné mon dépôt GitHub dans un nouveau dossier (`test-clone`), puis lancé `pnpm install --frozen-lockfile` (100 paquets installés, lockfile à jour) et `pnpm test`. Mon premier essai de clone en SSH avait échoué (« Permission denied (publickey) »), je l'ai refait avec l'adresse HTTPS.
 
-![Clone du dépôt et installation avec le lockfile](preuves/Captures%20d'ecran/git_clone.png)
+![Clone du dépôt et installation avec le lockfile](preuves/Captures%20d'ecran/git%20clone.png)
 
-![pnpm test dans le clone : 6 tests passés](preuves/Captures%20d'ecran/test_clone_6_passed_.png)
+![pnpm test dans le clone : 6 tests passés](preuves/Captures%20d'ecran/test_clone_6%20passed%20.png)
 
 ---
 
