@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 export default function PlanningList({ loadSessions }) {
 const [group, setGroup] = useState('all');
 const [items, setItems] = useState([]);
-const [loading, setLoading] = useState(false);
+const [loading, setLoading] = useState(true);
 useEffect(() => {
 setLoading(true);
 loadSessions({ group }).then(result => {
@@ -17,6 +17,10 @@ return <section>
 <option value="all">Tous</option><option value="A">Groupe A</option>
 <option value="B">Groupe B</option><option value="Promotion">Promotion</option>
 </select>
-{loading ? <p role="status">Chargement...</p> : <ul>{items.map(s => <li key={s.id}>{s.title}</li>)}</ul>}
+{loading
+  ? <p role="status">Chargement…</p>
+  : items.length === 0
+    ? <p>Aucune séance pour ce groupe.</p>
+    : <ul>{items.map(s => <li key={s.id}>{s.title}</li>)}</ul>}
 </section>;
 }
