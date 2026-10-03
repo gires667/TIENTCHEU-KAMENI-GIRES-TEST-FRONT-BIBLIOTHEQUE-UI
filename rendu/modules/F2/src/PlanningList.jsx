@@ -7,18 +7,26 @@ const [loading, setLoading] = useState(true);
 const [error, setError] = useState(null);
 const [attempt, setAttempt] = useState(0);
 useEffect(() => {
+  let ignore = false;
   setLoading(true);
   setError(null);
   loadSessions({ group }).then(
     result => {
-      setItems(result);
-      setLoading(false);
+      if (!ignore) {
+        setItems(result);
+        setLoading(false);
+      }
     },
     err => {
-      setError(err);
-      setLoading(false);
+      if (!ignore) {
+        setError(err);
+        setLoading(false);
+      }
     }
   );
+  return () => {
+    ignore = true;
+  };
 }, [group, loadSessions, attempt]);
 return <section>
 <h1>Planning</h1>
