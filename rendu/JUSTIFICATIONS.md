@@ -189,3 +189,4 @@ pnpm test        # non interactif (vitest run), 6 tests
 ## Module F3 — Bibliothèques UI
 
 *(à compléter)*
+///
