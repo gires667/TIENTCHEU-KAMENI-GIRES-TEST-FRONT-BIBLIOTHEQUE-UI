@@ -156,7 +156,7 @@ Pour être sûr que mon module est autonome, j'ai cloné mon dépôt GitHub dans
 
 ![Clone du dépôt et installation avec le lockfile](preuves/Captures%20d'ecran/git%20clone.png)
 
-![pnpm test dans le clone : 6 tests passés](preuves/Captures%20d'ecran/test_clone_6%20passed%20.png)
+![pnpm test dans le clone : 6 tests passés](preuves/Captures%20d'ecran/test%20clone%206%20passed%20.png)
 
 ---
 
