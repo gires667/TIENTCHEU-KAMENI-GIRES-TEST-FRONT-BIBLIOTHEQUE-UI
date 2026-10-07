@@ -97,12 +97,6 @@ J'ai recréé le composant `PlanningList` du sujet et les 6 séances. J'ai gard�
 
 ![Dossier preuves avec F2_avant_correction.txt](preuves/Captures%20d'ecran/preuves.png)
 
-*Remarque honnête :* les tests importent seulement `PlanningList.jsx`. Pour obtenir le « avant », j'ai lancé les tests pendant que `PlanningList.jsx` était encore identique à `PlanningList.initial.jsx`, puis j'ai commencé les corrections. La preuve est donc la capture, le fichier `.txt` et le commit daté.
-
-**Commit avant correction :** `XXXXXXX` (à remplir avec `git log --oneline`).
-
----
-
 ### 5. Les corrections (une à la fois) et les preuves « après »
 
 #### Correction 1 — message quand la liste est vide
@@ -143,8 +137,6 @@ J'ai recréé le composant `PlanningList` du sujet et les 6 séances. J'ai gard�
 - **Limite** : on ignore la réponse mais la requête part quand même côté serveur.
 
 ![Après correction 3 : 6 tests passés](preuves/Captures%20d'ecran/6%20passed%20.png)
-
-**Trace complète :** `preuves/F2_apres_correction.txt`. **Commit après correction :** `YYYYYYY` (à remplir).
 
 ---
 
