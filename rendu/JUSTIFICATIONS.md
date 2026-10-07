@@ -1,8 +1,6 @@
 # JUSTIFICATIONS — Rattrapage WEB2
 
 Étudiant : Gires Varel TIENTCHEU KAMENI
-
-> Ce fichier contient pour l'instant le **module F2**. La partie F3 sera ajoutée plus bas quand elle sera faite.
 > Les captures sont dans le dossier `preuves/Captures d'ecran/`.
 
 ## Sommaire F2
@@ -188,5 +186,167 @@ pnpm test        # non interactif (vitest run), 6 tests
 
 ## Module F3 — Bibliothèques UI
 
-*(à compléter)*
-///
+### 1. Ce que j'ai fait (résumé)
+
+J'ai fait une vue simplifiée du planning avec **React** et **Tailwind CSS**. Les 6 séances sont affichées sous forme de cartes, avec un filtre de groupe (Tous, A, B, Promotion), des badges de domaine et de statut, et un détail qui s'ouvre dans une fenêtre. J'ai prévu un état vide (démo avec `?demo=empty`) et vérifié l'affichage à 360 px et 1280 px. Ce module est indépendant de F2 : il a ses propres données (`src/data.js`) et son propre `package.json`.
+
+**Environnement** :
+- Node v22.14.0, pnpm 10.22.0
+- Vite 8.3.3, Tailwind CSS **X.Y.Z** (à compléter avec `pnpm list tailwindcss`), React 19.x
+- Lancement : `pnpm install --frozen-lockfile` puis `pnpm dev` (port affiché dans le terminal : 5174 chez moi, car 5173 était déjà pris)
+
+**Fichiers principaux** (dans `modules/F3/src/`) :
+
+| Fichier | Rôle |
+|---|---|
+| `data.js` | les 6 séances, les 3 formateurs, la fonction `filterSessions` |
+| `format.js` | formate la date (« Lundi 19 octobre ») et traduit am/pm |
+| `Badge.jsx` | pastille générique (forme, taille) |
+| `StatusBadge.jsx` | badge de statut : libellé + icône + couleur |
+| `DomainBadge.jsx` | badge de domaine (web, data, cyber, projet) |
+| `SessionCard.jsx` | une carte de séance, avec le bouton « Détails » |
+| `GroupFilter.jsx` | le filtre de groupe (`<label>` + `<select>`) |
+| `SessionDetail.jsx` | le détail dans un `<dialog>` modal |
+| `EmptyState.jsx` | le message quand il n'y a aucune séance |
+| `App.jsx` | assemble tout, garde l'état (groupe choisi, détail ouvert) |
+
+---
+
+### 2. Règles de filtrage (rappel)
+
+| Choix | Séances affichées | Nombre |
+|---|---|---|
+| Tous | s01 à s06 | 6 |
+| Groupe A | s01, s03, s04, s06 | 4 |
+| Groupe B | s02, s03, s05, s06 | 4 |
+| Promotion | s03, s06 | 2 |
+
+A et B incluent les séances communes « Promotion », comme demandé dans le sujet.
+
+---
+
+### 3. Les trois décisions
+
+#### Décision 1 — Hiérarchie carte / détail
+
+- **Ce qui apparaît tout de suite sur la carte** : le titre (le plus gros et le plus foncé, en `<h2>`), puis la date et la période, puis les deux badges (domaine et statut), puis le bouton « Détails ».
+- **Ce qui est réservé au détail** : le groupe, le mode (DG, CE, AUTO) et le formateur (ou « Aucun formateur » quand `teacherId` vaut `null`, comme pour s06).
+- **Pourquoi** : la carte doit se lire d'un coup d'œil et rester courte, surtout sur un écran de 360 px où elles s'empilent. Le groupe est déjà donné par le filtre, et le formateur ou le mode ne servent que pour la séance qui intéresse l'utilisateur.
+- **Alternative** : tout mettre sur la carte. Je ne l'ai pas fait parce que les cartes seraient très longues et plus difficiles à comparer.
+
+#### Décision 2 — Lisibilité des statuts
+
+- **Libellé écrit** : « Confirmée » ou « Proposée », jamais la couleur seule. S'y ajoute une icône (✓ ou …), cachée aux lecteurs d'écran (`aria-hidden`) pour qu'ils ne lisent que le libellé.
+- **Couleurs** : fond clair et texte très foncé de la même famille (par exemple vert pâle et vert foncé).
+- **Pourquoi** : une personne daltonienne, une impression en noir et blanc ou un lecteur d'écran ne permettent pas de distinguer vert et orange. Le texte garde l'information dans tous les cas.
+- **Mesure de contraste** (voir 5.5) : tous les badges dépassent largement 4,5:1.
+
+#### Décision 3 — Accès aux actions
+
+- **Repérage** : le filtre et le bouton « Détails » sont de vrais éléments `<select>` et `<button>`, avec un contour bleu visible quand on arrive dessus au clavier (`focus-visible`) et une hauteur de 44 px minimum (`min-h-11`) pour être faciles à toucher.
+- **Noms accessibles** : le filtre est relié à son `<label>` « Groupe ». Le bouton s'appelle « Détails de React composants » (et pas six boutons « Détails » identiques), ce qui contient bien le texte visible « Détails ».
+- **État** : le bouton porte `aria-expanded` (ouvert ou fermé) et `aria-haspopup="dialog"`.
+- **Clavier et focus** : le détail est un `<dialog>` ouvert avec `showModal()`. Le navigateur déplace le focus dans la fenêtre, empêche de naviguer derrière, et ferme avec **Esc**. À la fermeture, `App.jsx` remet le focus sur le bouton qui avait ouvert le détail (`triggerRef`).
+- **Alternative** : un panneau fait à la main avec `div` et gestion du focus à la main. J'ai préféré l'élément natif, qui fait déjà une grande partie du travail d'accessibilité.
+
+---
+
+### 4. Composants réutilisables
+
+- **`Badge`** : une seule forme (pastille arrondie), et la couleur arrive de l'extérieur avec `className`. `StatusBadge` et `DomainBadge` ne font que choisir le texte et les couleurs, ils ne dupliquent pas le style.
+- **`GroupFilter`** : il ne garde pas l'état, il reçoit `value` et `onChange` de son parent. On pourrait donc le réutiliser pour un autre filtre.
+- **`SessionCard`** : reçoit une séance et affiche toujours la même structure. Elle ne sait pas comment le détail s'ouvre, elle appelle seulement `onOpen`.
+- **`EmptyState`** : reçoit un titre et un texte. Utilisable pour n'importe quelle liste vide.
+
+---
+
+### 5. Preuves
+
+#### 5.1 Affichage à 360 px et à 1280 px
+
+Captures faites avec l'outil d'émulation d'appareil du navigateur (F12). À 360 px : une seule colonne (la capture montre le haut de la page, les cartes suivantes sont plus bas). À 1280 px : trois colonnes, contenu centré (`max-w-5xl`). Les titres longs passent à la ligne (`break-words`) et les badges aussi (`flex-wrap`).
+
+![Liste à 360 px](preuves/Captures%20d'ecran/F3-liste-360.png)
+
+![Liste à 1280 px](preuves/Captures%20d'ecran/F3-liste-1280.png)
+
+**Absence de débordement horizontal** : mesuré à 360 px dans la console avec `document.documentElement.scrollWidth > window.innerWidth`, résultat **`false`** (pas de défilement horizontal).
+
+> ⚠️ **À compléter avant de rendre :** vérifier que j'ai bien lancé cette commande en mode 360 px (sinon la refaire) et ajouter une capture de la console avec le `false`, par exemple `F3-debordement.png`. Supprimer ce message ensuite.
+
+#### 5.2 Filtre de groupe
+
+Sélection de « Groupe A » : 4 séances (React composants, Données et SQL, Authentification, Travail autonome), donc les séances A et les séances Promotion, sans les séances B. On voit aussi le contour bleu de focus sur le filtre.
+
+![Filtre sur le Groupe A : 4 séances](preuves/Captures%20d'ecran/F3-filtre-A.png)
+
+#### 5.3 Détail d'une séance
+
+Détail de « React événements » : groupe B, mode DG, formateur Alex Démonstration. Capture faite sur écran large (environ 1340 px, hors mode appareil).
+
+![Détail ouvert (écran large)](preuves/Captures%20d'ecran/F3-detail-ecran-large.png)
+
+#### 5.4 État vide (scénario reproductible)
+
+Le jeu de données fourni ne produit jamais de liste vide avec le seul filtre de groupe (le plus petit résultat est 2 séances pour « Promotion »). **Scénario de démonstration :** ouvrir l'application avec `?demo=empty` à la fin de l'adresse, par exemple `http://localhost:5174/?demo=empty`. Un bandeau « Mode démo » s'affiche, le compteur indique « 0 séance » et le message « Aucune séance à afficher » apparaît à la place des cartes. Le lien « Quitter la démo » revient à la liste normale. (Sur la capture, la zone du profil du navigateur a été masquée.)
+
+![État vide avec ?demo=empty](preuves/Captures%20d'ecran/F3-vide.png)
+
+#### 5.5 Mesure de contraste
+
+- **Outil utilisé** : un petit script dans la console du navigateur, qui lit les couleurs réellement affichées (`getComputedStyle`) et applique la formule de contraste WCAG. Vérification avec un deuxième outil : **WebAIM Contrast Checker** (*à compléter : indiquer les couples recontrôlés, ou supprimer cette phrase si je ne l'ai pas fait*).
+- **Seuil** : 4,5:1 (WCAG AA, texte normal ; le texte des badges est petit, donc c'est ce seuil qui s'applique).
+
+| Élément | Texte | Fond | Ratio | Résultat |
+|---|---|---|---|---|
+| Badge `web` | #1c398e | #dbeafe | 8,50 | conforme |
+| Badge « ✓ Confirmée » | #0d542b | #dbfce7 | 8,23 | conforme |
+| Badge `data` | #59168b | #f3e8ff | 9,31 | conforme |
+| Badge `cyber` | #8b0836 | #ffe4e6 | 8,00 | conforme |
+| Badge « … Proposée » | #7b3306 | #fef3c6 | 8,13 | conforme |
+| Badge `projet` | #0f172b | #e2e8f0 | 14,46 | conforme |
+| Date de la carte | #314158 | #ffffff | 10,36 | conforme |
+
+Tous les ratios sont au-dessus de 4,5:1 (le plus bas est 8,00:1).
+
+![Tableau de contraste dans la console](preuves/Captures%20d'ecran/F3-contraste.png)
+
+*Limite :* j'ai mesuré les badges et la date. Je n'ai pas mesuré les autres textes (titres, boutons), qui utilisent un texte très foncé (`slate-900`) sur fond blanc.
+
+#### 5.6 Protocole clavier
+
+À faire avec le clavier seul (sans la souris) :
+
+1. `Tab` : le focus arrive sur le filtre « Groupe » (contour bleu visible, voir la capture du 5.2). Les flèches haut et bas changent de groupe, et le compteur se met à jour.
+2. `Tab` : le focus arrive sur le bouton « Détails de … » de la première carte. `Tab` encore : carte suivante.
+3. Sur un bouton « Détails » : `Enter` (ou `Space`) ouvre le détail. Le focus passe dans la fenêtre, sur le bouton « Fermer » (contour bleu visible sur la capture ci-dessous, détail de « Données et SQL »).
+4. `Tab` plusieurs fois : le focus reste dans la fenêtre.
+5. `Esc` : la fenêtre se ferme et le focus revient sur le bouton « Détails » qui l'avait ouverte.
+6. Même test avec le bouton « Fermer » (`Enter`).
+
+![Focus sur « Fermer » à l'ouverture du détail](preuves/Captures%20d'ecran/F3-detail-focus-fermer.png)
+
+**Résultat observé** : à l'étape 3, le focus arrive bien sur « Fermer » (capture ci-dessus). *(à compléter : résultat des étapes 5 et 6, le focus revient-il sur le bon bouton « Détails » ?)*
+
+> ⚠️ **À compléter avant de rendre :** faire le test des étapes 5 et 6, écrire le résultat réel ci-dessus, et ajouter une capture du focus revenu sur le bouton « Détails » (par exemple `F3-focus-retour.png`). Supprimer ce message ensuite.
+
+---
+
+### 6. Limites
+
+- Je n'ai pas testé avec un vrai lecteur d'écran (NVDA, VoiceOver). Les noms accessibles et les rôles sont prévus, mais pas écoutés.
+- Testé seulement dans un navigateur de type Chromium, sur Windows.
+- F3 n'a pas de tests automatisés (le sujet ne les impose pas pour ce module).
+- La démo de l'état vide passe par un paramètre d'adresse : c'est une démonstration, pas une vraie fonctionnalité.
+- Les données sont en mémoire dans `data.js` : pas de serveur, pas de base de données, pas de sauvegarde.
+- Le contraste n'est mesuré que pour les badges et la date (voir 5.5).
+- Les captures à 360 px et 1280 px sont faites avec l'outil d'émulation d'appareil du navigateur, pas sur un vrai téléphone. Les captures du filtre et du détail sont faites sur écran large, hors émulation.
+
+### 7. Commandes
+
+```bash
+cd modules/F3
+pnpm install --frozen-lockfile
+pnpm dev        # puis ouvrir l'adresse affichée (5173 ou 5174)
+pnpm build      # vérifie que le projet compile
+```
