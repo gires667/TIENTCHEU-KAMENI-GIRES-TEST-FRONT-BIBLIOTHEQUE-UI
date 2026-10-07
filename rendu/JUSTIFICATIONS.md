@@ -349,4 +349,4 @@ cd modules/F3
 pnpm install --frozen-lockfile
 pnpm dev        # puis ouvrir l'adresse affichée (5173 ou 5174)
 pnpm build      # vérifie que le projet compile
-```
+```//
