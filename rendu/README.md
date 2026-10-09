@@ -111,11 +111,11 @@ Les versions exactes sont figées dans `modules/F3/pnpm-lock.yaml`.
 
 | Paquet | Version | Rôle |
 |---|---|---|
-| react, react-dom | (à compléter) | bibliothèque d'interface |
-| tailwindcss | (à compléter) | classes utilitaires CSS |
-| @tailwindcss/vite | (à compléter) | branche Tailwind dans Vite |
+| react, react-dom | (^19.3.0) | bibliothèque d'interface |
+| tailwindcss | (^4.3.3) | classes utilitaires CSS |
+| @tailwindcss/vite | (^4.3.3) | branche Tailwind dans Vite |
 | vite | 8.3.3 | serveur de développement et build |
-| @vitejs/plugin-react | (à compléter) | comprend le JSX |
+| @vitejs/plugin-react | (^6.1.2) | comprend le JSX |
 
 > Pour remplir ce tableau : `cd modules/F3`, puis `pnpm list --depth 0`.
 

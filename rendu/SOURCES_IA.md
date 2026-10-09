@@ -11,8 +11,7 @@
 | **Claude** (Anthropic), via l'interface web claude.ai | explications, plan de travail pas à pas, code des tests, code des corrections, code des composants F3, brouillons de `README.md`, `JUSTIFICATIONS.md` et `SOURCES_IA.md` |
 | Sujet PDF du rattrapage | énoncé, données fictives, code du composant de départ |
 | Outils du navigateur (F12 : émulation d'appareil, console) | captures à 360 px et 1280 px, mesure du contraste, vérification du débordement |
-| *(à compléter : WebAIM Contrast Checker, documentation Vitest / Testing Library / Tailwind, si je les ai consultés, sinon supprimer cette ligne)* | |
-
+|
 ## 2. Usages et fichiers concernés
 
 | Fichier ou livrable | Rôle de l'IA | Mon rôle |
@@ -22,7 +21,6 @@
 | `modules/F2/src/PlanningList.test.jsx` | a proposé les 6 tests, écrits un par un avec explication | je les ai écrits un à la fois, lancés à chaque étape, et j'ai capturé les résultats |
 | `modules/F2/src/PlanningList.jsx` | a proposé les 3 corrections (liste vide, erreur + relance, réponses périmées) | je les ai appliquées une par une et relancé les tests après chacune (3 rouges, puis 4, 5, 6 verts) |
 | `modules/F3/src/*` (composants, Tailwind) | a proposé le code des composants, du filtre, du détail en `<dialog>` et de l'état vide | je les ai créés, lancés avec `pnpm dev`, testés au clavier et dans le navigateur |
-| `README.md`, `JUSTIFICATIONS.md` | a rédigé des brouillons à partir de mes sorties de terminal, de mon `package.json` et de mes captures | *(à compléter : ce que j'ai relu, reformulé ou corrigé moi-même)* |
 | `preuves/` | n'a pas produit les captures | toutes les captures et traces viennent de mes exécutions (sauf une capture dont j'ai fait masquer la zone du profil du navigateur) |
 
 ## 3. Requêtes représentatives (résumées)
