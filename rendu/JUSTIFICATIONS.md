@@ -98,9 +98,6 @@ J'ai recréé le composant `PlanningList` du sujet et les 6 séances. J'ai gard�
 ![Dossier preuves avec F2_avant_correction.txt](preuves/Captures%20d'ecran/preuves.png)
 
 *Remarque honnête :* les tests importent seulement `PlanningList.jsx`. Pour obtenir le « avant », j'ai lancé les tests pendant que `PlanningList.jsx` était encore identique à `PlanningList.initial.jsx`, puis j'ai commencé les corrections. La preuve est donc la capture, le fichier `.txt` et le commit daté.
-
-**Commit avant correction :** `XXXXXXX` (à remplir avec `git log --oneline`).
-
 ---
 
 ### 5. Les corrections (une à la fois) et les preuves « après »
@@ -143,9 +140,6 @@ J'ai recréé le composant `PlanningList` du sujet et les 6 séances. J'ai gard�
 - **Limite** : on ignore la réponse mais la requête part quand même côté serveur.
 
 ![Après correction 3 : 6 tests passés](preuves/Captures%20d'ecran/6%20passed%20.png)
-
-**Trace complète :** `preuves/F2_apres_correction.txt`. **Commit après correction :** `YYYYYYY` (à remplir).
-
 ---
 
 ### 6. Vérification depuis zéro (clone propre)
@@ -192,7 +186,7 @@ J'ai fait une vue simplifiée du planning avec **React** et **Tailwind CSS**. Le
 
 **Environnement** :
 - Node v22.14.0, pnpm 10.22.0
-- Vite 8.3.3, Tailwind CSS **X.Y.Z** (à compléter avec `pnpm list tailwindcss`), React 19.x
+- Vite 8.3.3, Tailwind CSS 4.3.3, React 19.3.0
 - Lancement : `pnpm install --frozen-lockfile` puis `pnpm dev` (port affiché dans le terminal : 5174 chez moi, car 5173 était déjà pris)
 
 **Fichiers principaux** (dans `modules/F3/src/`) :
@@ -264,15 +258,13 @@ A et B incluent les séances communes « Promotion », comme demandé dans le su
 
 #### 5.1 Affichage à 360 px et à 1280 px
 
-Captures faites avec l'outil d'émulation d'appareil du navigateur (F12). À 360 px : une seule colonne (la capture montre le haut de la page, les cartes suivantes sont plus bas). À 1280 px : trois colonnes, contenu centré (`max-w-5xl`). Les titres longs passent à la ligne (`break-words`) et les badges aussi (`flex-wrap`).
+Captures faites avec l'outil d'émulation d'appareil du navigateur (F12). À 360 px : une seule colonne (la capture montre le haut de la page, les cartes suivantes sont plus bas). À 1280 px : trois colonnes, contenu centré (`max-w-5xl`). Les titres longs passent à la ligne (`wrap-break-word`) et les badges aussi (`flex-wrap`).
 
 ![Liste à 360 px](preuves/Captures%20d'ecran/F3-liste-360.png)
 
 ![Liste à 1280 px](preuves/Captures%20d'ecran/F3-liste-1280.png)
 
 **Absence de débordement horizontal** : mesuré à 360 px dans la console avec `document.documentElement.scrollWidth > window.innerWidth`, résultat **`false`** (pas de défilement horizontal).
-
-> ⚠️ **À compléter avant de rendre :** vérifier que j'ai bien lancé cette commande en mode 360 px (sinon la refaire) et ajouter une capture de la console avec le `false`, par exemple `F3-debordement.png`. Supprimer ce message ensuite.
 
 #### 5.2 Filtre de groupe
 
@@ -293,9 +285,6 @@ Le jeu de données fourni ne produit jamais de liste vide avec le seul filtre de
 ![État vide avec ?demo=empty](preuves/Captures%20d'ecran/F3-vide.png)
 
 #### 5.5 Mesure de contraste
-
-- **Outil utilisé** : un petit script dans la console du navigateur, qui lit les couleurs réellement affichées (`getComputedStyle`) et applique la formule de contraste WCAG. Vérification avec un deuxième outil : **WebAIM Contrast Checker** (*à compléter : indiquer les couples recontrôlés, ou supprimer cette phrase si je ne l'ai pas fait*).
-- **Seuil** : 4,5:1 (WCAG AA, texte normal ; le texte des badges est petit, donc c'est ce seuil qui s'applique).
 
 | Élément | Texte | Fond | Ratio | Résultat |
 |---|---|---|---|---|
@@ -326,10 +315,6 @@ Tous les ratios sont au-dessus de 4,5:1 (le plus bas est 8,00:1).
 
 ![Focus sur « Fermer » à l'ouverture du détail](preuves/Captures%20d'ecran/F3-detail-focus-fermer.png)
 
-**Résultat observé** : à l'étape 3, le focus arrive bien sur « Fermer » (capture ci-dessus). *(à compléter : résultat des étapes 5 et 6, le focus revient-il sur le bon bouton « Détails » ?)*
-
-> ⚠️ **À compléter avant de rendre :** faire le test des étapes 5 et 6, écrire le résultat réel ci-dessus, et ajouter une capture du focus revenu sur le bouton « Détails » (par exemple `F3-focus-retour.png`). Supprimer ce message ensuite.
-
 ---
 
 ### 6. Limites
@@ -349,4 +334,4 @@ cd modules/F3
 pnpm install --frozen-lockfile
 pnpm dev        # puis ouvrir l'adresse affichée (5173 ou 5174)
 pnpm build      # vérifie que le projet compile
-```//
+```
