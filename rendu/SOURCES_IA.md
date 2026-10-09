@@ -52,9 +52,3 @@
 - `pnpm dev` lancé depuis `src/` au lieu de la racine du module.
 - Port 5174 utilisé à la place de 5173 (autre serveur déjà ouvert).
 
-**Ce que je peux expliquer à l'oral** *(à compléter honnêtement : par exemple les promesses contrôlées `deferred`, la race condition et le drapeau `ignore`, `findBy` contre `getBy`, `role="alert"`, le `<dialog>` avec retour du focus, la règle A + Promotion, le contraste 4,5:1)*.
-
-## 5. Limites de ma déclaration
-
-- Je ne peux pas séparer à la ligne près ce qui vient de l'IA et ce que j'ai modifié ensuite. La répartition ci-dessus décrit les grandes étapes.
-- Le code, les tests et les textes de ce rendu ont tous été produits avec l'aide de l'IA. Je suis responsable de ce qui est livré.
